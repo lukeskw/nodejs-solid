@@ -1,21 +1,11 @@
 import fastify from 'fastify'
-import { knex } from './database'
-import crypto from 'node:crypto'
 import { env } from './env'
+import { transactionsRoutes } from './routes/transactions'
 
 const app = fastify()
 
-app.get('/hello', async () => {
-  const transaction = await knex('transactions')
-    .insert({
-      id: crypto.randomUUID(),
-      title: 'Hello World',
-      amount: 10000,
-    })
-    .returning('*')
-  // const transaction = await knex('transactions').select('*')
-
-  return transaction
+app.register(transactionsRoutes, {
+  prefix: '/transactions',
 })
 
 app
