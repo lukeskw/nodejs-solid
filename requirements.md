@@ -12,5 +12,5 @@
 - [x] Transaction should be of types:
   1. [x] credit: should sum up to the total amount;
   2. [x] debit: should subtract to the total amount;
-- [ ] Should be possible to identify the user on the transactions;
-- [ ] User should be able to view only transactions that have been created by his account
+- [x] Should be possible to identify the user on the transactions;
+- [x] User should be able to view only transactions that have been created by his account
