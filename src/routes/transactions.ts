@@ -3,6 +3,8 @@ import { knex } from '../database'
 
 import { z } from 'zod'
 
+// cookies <--> a way to keep context between requests
+
 export async function transactionsRoutes(app: FastifyInstance) {
   app.get('/', async () => {
     const transactions = await knex('transactions').select()
@@ -49,10 +51,24 @@ export async function transactionsRoutes(app: FastifyInstance) {
 
     const { title, amount, type } = body
 
+    let sessionId = request.cookies.sessionId
+
+    if (!sessionId) {
+      sessionId = crypto.randomUUID()
+
+      response.cookie('sessionId', sessionId, {
+        httpOnly: true,
+        secure: true,
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+      })
+    }
+
     await knex('transactions').insert({
       id: crypto.randomUUID(),
       title,
       amount: type === 'credit' ? amount : amount * -1,
+      session_id: sessionId,
     })
 
     return response.status(201).send()
