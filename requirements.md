@@ -3,7 +3,7 @@
 ## Functional Requirements
 
 - [x] User should be able to create a new transaction;
-- [ ] User should be able to obtain his account resume;
+- [x] User should be able to obtain his account resume;
 - [x] User should be able to list all transactions that have been created;
 - [x] User should be able to view an unique transaction;
 
